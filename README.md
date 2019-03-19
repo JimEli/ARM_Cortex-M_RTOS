@@ -17,6 +17,7 @@ Each thread has a thread control block (TCB) encapsulating the state of the thre
 
 * Program was developed with Keil and VisualGDB/MS Visual Studio IDEs.
 
+
 Reference
 
-"Embedded Systems: Real-Time Operating Systems for Arm Cortex M Microcontrollers" 2nd Edition, by Jonathan Valvano
+"Embedded Systems: Real-Time Operating Systems for Arm Cortex M Microcontrollers" 5th Edition, by Jonathan Valvano
