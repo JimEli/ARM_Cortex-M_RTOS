@@ -1,5 +1,5 @@
-# ARM_Cortex-M_Basic_RTOS
-## Basic Round Robin RTOS Scheduler Demonstration for Cortex-M4
+# ARM Cortex-M Basic RTOS
+## Basic Round-Robin RTOS Scheduler Demonstration for Cortex-M4
 
 Utilizes an STM32F407VG Discovery Board.
 
