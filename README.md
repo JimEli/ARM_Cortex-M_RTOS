@@ -1,5 +1,5 @@
 # ARM Cortex-M RTOS
-## A Simple Pre-Emptive (Round-Robin) RTOS Scheduler Demonstration for Cortex-M4
+## A Simple Pre-Emptive (Round-Robin) RTOS Scheduler for Cortex-M4
 
 Utilizes an STM32F407VG Discovery Board.
 
