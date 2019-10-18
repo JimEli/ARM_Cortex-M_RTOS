@@ -3,7 +3,7 @@
   STM32F4 Discovery Board version.
   
   James M. Eli
-  
+  March 30, 2019.
 
   Each thread has a thread control block (TCB) encapsulating the state 
   of the thread. A thread’s TCB maintains a link to its stack and a 
