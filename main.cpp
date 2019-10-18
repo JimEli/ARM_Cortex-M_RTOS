@@ -1,9 +1,12 @@
 /*
   Round Robin RTOS Scheduler Demo for Cortex-M4.
   STM32F4 Discovery Board version.
+  
+  James M. Eli
+  
 
   Each thread has a thread control block (TCB) encapsulating the state 
-  of the thread. A thread’s TCB maintains a link to its stack and a 
+  of the thread. A threadâ€™s TCB maintains a link to its stack and a 
   link to the TCB of the next thread. TCBs are maintained in a circular 
   linked list. CurrentPt points to the TCB of the thread that is currently 
   running. The next field is a pointer chaining all 4 TCBs into a circular
