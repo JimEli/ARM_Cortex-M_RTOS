@@ -54,8 +54,10 @@ uint32_t threadCount;
 void osKernelInit(void)
 {
 	__disable_irq();
+	
 	// Convert systick counter value to ms.
 	MILLIS_PRESCALER = (BUS_FREQ / 1000);
+	
 	// No threads created yet.
 	threadCount = 0;
 }
@@ -64,8 +66,10 @@ void osKernelStackInit(int threadID, void(*thread)(void))
 {
 	// Set xPSR
 	tcbs[threadID].stackPt = &TCB_STACK[threadID][STACKSIZE - 16]; 
+	
 	// Set thumb mode.
 	TCB_STACK[threadID][STACKSIZE - 1] = 0x01000000; 
+	
 	// Set task function address.
 	TCB_STACK[threadID][STACKSIZE - 2] = (int32_t)(thread); 
 }
@@ -75,8 +79,10 @@ void osKernelAddThread(void(*thread)(void))
 	// Reached max thread count?
 	if (threadCount >= NUM_THREADS)
 		return;
+
 	// Atomic section. 
 	__disable_irq(); 
+	
 	// Link threads round robin style.
 	if (threadCount)
 		// Link previous thread to new one.
@@ -84,12 +90,17 @@ void osKernelAddThread(void(*thread)(void))
 	else
 		// Set current thread pointer to 1st thread.
 		currentPt = &tcbs[0];
+	
 	// Make list circular.
 	tcbs[threadCount].nextPt = &tcbs[0]; 
+	
 	// Init thread stack.
 	osKernelStackInit(threadCount, thread);
+	
 	// Increment thread count.
 	threadCount++;
+	
+	// End atomic section.
 	__enable_irq();
 }
 
@@ -102,10 +113,13 @@ int8_t osKernelStart(uint32_t quanta)
 	// Disable systick.
 	SysTick->CTRL = 0;
 	SysTick->VAL = 0;
+	
 	// Systick countdown value.
 	SysTick->LOAD = (quanta * MILLIS_PRESCALER) - 1;
+	
 	// Set lowest priority (7).
 	SYSPRI3 = (SYSPRI3 & 0x00FFFFFF) | 0xE0000000;
+	
 	// Enable systick.
 	SysTick->CTRL = 0x00000007;
 	
@@ -120,6 +134,7 @@ void osSuspendThread(void)
 {
 	// Reset counter for next thread.
 	SysTick->VAL = 0;
+	
 	// Trigger systick interrupt.
 	INTCTRL = 0x0400000;
 }
@@ -130,21 +145,28 @@ void osSemaphoreInit(int32_t* semaphore, int32_t n) { *semaphore = n; }
 void osSignalSet(int32_t* semaphore)
 {
 	__disable_irq();
+	
 	*semaphore += 1;
+	
 	__enable_irq();
 }
 
 void osSignalWait(int32_t* semaphore)
 {
 	__disable_irq();
+	
 	while (*semaphore <= 0)
 	{
 		__enable_irq();
+	
 		// Cooperative-semaphore adds yield function.
 		osSuspendThread();
+		
 		__disable_irq();
 	}
+	
 	*semaphore -= 1;
+	
 	__enable_irq();
 }
 
@@ -155,8 +177,11 @@ volatile uint32_t _ticks;
 uint32_t getTick()
 {
 	__disable_irq();
+	
 	_ticks = ticks;
+	
 	__enable_irq();
+	
 	return _ticks;
 }
 
@@ -166,6 +191,7 @@ void Delay(uint32_t ms)
 	uint32_t start;
 
 	start = getTick();
+	
 	while ((getTick() - start) < ms) {}
 }
 
