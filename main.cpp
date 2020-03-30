@@ -26,6 +26,7 @@
 // STM32F407 Discovery
 // AHB1 PORT D clock enable
 #define PORTD_CLOCK (1<<3)
+
 // Colored LEDs  
 #define GREEN       (1U<<12) // D.12
 #define ORANGE      (1U<<13) // D.13
@@ -40,6 +41,7 @@ void initGPIO()
 {
   // Enable clock access to PORT of PIN.
   RCC->AHB1ENR |= PORTD_CLOCK;
+	
   // Set the PIN's mode.
   GPIOD->MODER |= (RED_BIT | GREEN_BIT | BLUE_BIT | ORANGE_BIT);	
 }
@@ -112,6 +114,7 @@ void Task1(void)
 		count1++;
 	}
 }
+
 void Task2(void)
 { 
 	while (1) 
