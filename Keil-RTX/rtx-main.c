@@ -26,8 +26,8 @@ void OrangeToggle(void) { GPIOD->ODR ^= ORANGE; }
 
 void GPIO_Init()
 {
-	// Enable clock access to PORT of PIN.
-	RCC->AHB1ENR |= PORTD_CLOCK;
+  // Enable clock access to PORT of PIN.
+  RCC->AHB1ENR |= PORTD_CLOCK;
   // Set the PIN's mode.
   GPIOD->MODER |= (RED_BIT | GREEN_BIT | BLUE_BIT | ORANGE_BIT);	
 }
@@ -36,47 +36,47 @@ void GPIO_Init()
 
 void orangeThread(void const* arg1)
 {
-	while(1)
-	{
+  while(1)
+  {
     // Toggle LED.
-		GPIOD->ODR ^= ORANGE;
-		osDelay(2000);
-	}
+    GPIOD->ODR ^= ORANGE;
+    osDelay(2000);
+  }
 }
 
 void redThread(void const* arg1)
 {
-	while(1)
-	{
-	  //count3++;
+  while(1)  
+  {
+    //count3++;
     // Toggle LED.
-		GPIOD->ODR ^= RED;
-		osDelay(1000);
-	}
+    GPIOD->ODR ^= RED;
+    osDelay(1000);
+  }
 }
 
 void blueThread(void const* arg1)
 {
-	while(1)
-	{
-	  //count1++;
+  while(1)
+  {
+    //count1++;
     // Toggle LED.
-		BlueToggle();
-		osDelay(500);
-	}
+    BlueToggle();
+    osDelay(500);
+  }
 }
 
 void greenThread(void const* arg1)
 {
-	while(1)
-	{
-		//count2++;
+  while(1)
+  {
+    //count2++;
     // Toggle LED.
-  	GPIOD->ODR |= GREEN;
-	  osDelay(250);
-	  GPIOD->ODR &= ~GREEN;
-	  osDelay(250);
-	}
+    GPIOD->ODR |= GREEN;
+    osDelay(250);
+    GPIOD->ODR &= ~GREEN;
+    osDelay(250);
+  }
 }
 
 // Define single instances of 4 threads, normal priority, defualt stack size.
@@ -87,13 +87,12 @@ osThreadDef(greenThread, osPriorityNormal, 1, 0);
 
 int main(void) 
 {
-	GPIO_Init();
+  GPIO_Init();
 
   osThreadCreate(osThread(orangeThread), NULL);
   osThreadCreate(osThread(redThread), NULL);
   osThreadCreate(osThread(blueThread), NULL);
   osThreadCreate(osThread(greenThread), NULL);
   
-	while(1);
+  while(1);
 }	
-
