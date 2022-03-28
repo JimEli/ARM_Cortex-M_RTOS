@@ -81,20 +81,19 @@ int main(void)
 
   OSInit(&osError);
   OSTaskCreate(
-	             &osRedThreadTcb,    /* TCB */
-	             "red thread",       /* Descriptive name */
-	             redThread,          /* Task function */
-	             (void *) 0,         /* Task function arguments */
-							 1,                  /* Priority */
+               &osRedThreadTcb,    /* TCB */
+               "red thread",       /* Descriptive name */
+               redThread,          /* Task function */
+               (void *) 0,         /* Task function arguments */
+               1,                  /* Priority */
                &redThreadStack[0], /* Stack */
                0U,                 /* Stack limit */
                STACK_SIZE,         /* Stack size */
                0,                  /* Msg queue size */
-							 0,                  /* Time quanta, 0=default */
-							 0,                  /* TCB extension */
-							 (OS_OPT_TASK_STK_CHK + OS_OPT_TASK_STK_CLR),
-                                   /* Options */
-							 &osError            /* Error */
-							);
+               0,                  /* Time quanta, 0=default */
+               0,                  /* TCB extension */
+               (OS_OPT_TASK_STK_CHK + OS_OPT_TASK_STK_CLR), /* Options */
+               &osError            /* Error */
+              );
   OSStart(&osError);			 
 }
